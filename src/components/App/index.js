@@ -1,23 +1,23 @@
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
-import theme from '../../styles/theme';
-import GlobalStyle from '../../styles/global';
 
 import { Container } from './style';
 import { Header } from '../Header';
-import { ContactsList } from '../ContactList';
+import GlobalStyle from '../../styles/global';
+import theme from '../../styles/theme';
+import Routes from '../../Routes';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Container>
           <Header />
-          <ContactsList />
+          <Routes />
         </Container>
-      </BrowserRouter>
-    </ThemeProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
