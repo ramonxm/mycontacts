@@ -6,7 +6,7 @@ export default function Routes() {
   return (
     <Switch>
       <Route path="/" element={<Home />} />
-      <Route path="/new" element={<NewContact />} />
+      <Route path="/new-contact" element={<NewContact />} />
       <Route path="/edit/:id" element={<EditContact />} />
     </Switch>
   );

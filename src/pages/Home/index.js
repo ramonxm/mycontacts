@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Loader } from '../../components/Loader';
 import {
   Container, InputSearchContainer, Header, ListContainer, Card,
 } from './style';
 
 export const Home = () => (
   <Container>
+    <Loader />
     <InputSearchContainer>
       <input type="text" placeholder="Pesquisar pelo nome..." />
     </InputSearchContainer>
