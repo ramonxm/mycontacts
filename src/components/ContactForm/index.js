@@ -23,7 +23,6 @@ export const ContactForm = ({ buttonLabel }) => (
         </option>
       </Select>
     </FormGroup>
-
     <ButtonContainer>
       <Button tye="submit">
         {buttonLabel}
