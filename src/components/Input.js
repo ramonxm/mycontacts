@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Input = styled.input`
   background: #fff;
@@ -7,13 +7,20 @@ export const Input = styled.input`
   border: 2px solid #fff;
   height: 52px;
   border-radius: 4px;
-  border: none;
   outline: none;
   padding: 0 16px;
   font-size: 16px;
-  transition: border-color .2s ease-in;
+  transition: border-color 0.2s ease-in;
 
   &:focus {
     border-color: ${({ theme }) => theme.palette.primary.main};
   }
+
+  ${({ theme, error }) => error && css`
+    color: ${theme.palette.danger.main};
+    border-color: ${theme.palette.danger.main};
+    &:focus {
+      border-color: ${theme.palette.danger.main};
+    }
+  `}
 `;
