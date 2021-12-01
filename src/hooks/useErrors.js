@@ -27,6 +27,7 @@ const useErrors = () => {
   );
 
   return {
+    errors,
     setError,
     removeError,
     getErrorMessageByFieldName,
