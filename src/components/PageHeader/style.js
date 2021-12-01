@@ -11,7 +11,7 @@ export const Container = styled.header`
       color: ${({ theme }) => theme.palette.primary.main};
     }
     img {
-      margin-left: 8px;
+      margin-right: 8px;
       transform: rotate(-90deg);
     }
   }
