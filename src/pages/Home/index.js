@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import {
   Container, InputSearchContainer, Header, ListHeader, Card,
 } from './style';
+import { Loader } from '../../components/Loader';
+import delay from '../../utils/delay';
 
 const baseURL = 'http://localhost:3001';
 
@@ -10,19 +12,25 @@ export const Home = () => {
   const [contacts, setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
 
   useEffect(() => {
-    fetch(`${baseURL}/contacts?orderBy=${orderBy}`)
-      .then(async (response) => {
+    (async () => {
+      try {
+        const response = await fetch(`${baseURL}/contacts?orderBy=${orderBy}`);
+        await delay(500);
         const contact = await response.json();
         setContacts(contact);
-      }).catch((error) => {
+      } catch (error) {
         throw new Error(error);
-      });
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, [orderBy]);
 
   const handleToggleOrderBy = () => {
@@ -37,7 +45,7 @@ export const Home = () => {
 
   return (
     <Container>
-
+      <Loader isLoading={isLoading} />
       <InputSearchContainer>
         <input
           type="text"
