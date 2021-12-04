@@ -4,9 +4,7 @@ import {
   Container, InputSearchContainer, Header, ListHeader, Card,
 } from './style';
 import { Loader } from '../../components/Loader';
-import delay from '../../utils/delay';
-
-const baseURL = 'http://localhost:3001';
+import ContactsService from '../../services/ContactsService';
 
 export const Home = () => {
   const [contacts, setContacts] = useState([]);
@@ -21,10 +19,8 @@ export const Home = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`${baseURL}/contacts?orderBy=${orderBy}`);
-        await delay(500);
-        const contact = await response.json();
-        setContacts(contact);
+        const contactsList = await ContactsService.listContacts(orderBy);
+        setContacts(contactsList);
       } catch (error) {
         throw new Error(error);
       } finally {
