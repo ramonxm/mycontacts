@@ -17,7 +17,7 @@ class HttpClient {
 
     if (response.ok) return body;
 
-    throw new Error(body.error);
+    throw new Error(body?.error || `${response.status} - ${response.statusText}`);
   }
 }
 
