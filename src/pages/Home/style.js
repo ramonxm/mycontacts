@@ -157,3 +157,15 @@ export const EmptyListContainer = styled.div`
     }
   }
 `;
+
+export const SearchNotFoundContainer = styled.div`
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+
+  span {
+    color: ${({ theme }) => theme.palette.gray[200]};
+    word-break: break-word;
+  }
+`;

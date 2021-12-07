@@ -12,6 +12,7 @@ import {
   Card,
   ErrorContainer,
   EmptyListContainer,
+  SearchNotFoundContainer,
 } from './style';
 import { Loader } from '../../components/Loader';
 import { Button } from '../../components/Button';
@@ -113,6 +114,16 @@ export const Home = () => {
             </p>
           </EmptyListContainer>
           )}
+
+          {(contacts.length > 0 && filteredContacts.length < 1) && (
+            <SearchNotFoundContainer>
+              <img src="/assets/svg/magnifier-question.svg" alt="magnifier-question" />
+              <span>
+                Nenhum resultado foi encontrado para <strong>{searchTerm}</strong>.
+              </span>
+            </SearchNotFoundContainer>
+          )}
+
           {filteredContacts.length > 0 && (
           <ListHeader orderBy={orderBy}>
             <button type="button" onClick={handleToggleOrderBy}>
@@ -121,6 +132,7 @@ export const Home = () => {
             </button>
           </ListHeader>
           )}
+
           {filteredContacts.map((contact) => (
             <Card key={contact.id}>
               <div className="info">
