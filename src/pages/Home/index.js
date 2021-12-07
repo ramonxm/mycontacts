@@ -31,9 +31,8 @@ export const Home = () => {
   const loadContacts = useCallback(async () => {
     try {
       const contactsList = await ContactsService.listContacts(orderBy);
-      setContacts([]);
+      setContacts(contactsList);
       setHasError(false);
-      console.log(contactsList);
     } catch {
       setHasError(true);
     } finally {
