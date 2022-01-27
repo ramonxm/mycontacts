@@ -25,7 +25,7 @@ export const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  const filteredContacts = useMemo(() => contacts.filter((contact) => (
+  const filteredContacts = useMemo(() => contacts?.filter((contact) => (
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
 
@@ -62,7 +62,7 @@ export const Home = () => {
   return (
     <Container>
       <Loader isLoading={isLoading} />
-      {contacts.length > 0 && (
+      {contacts?.length > 0 && (
       <InputSearchContainer>
         <input
           type="text"
@@ -77,16 +77,16 @@ export const Home = () => {
         hasError
           ? 'flex-end'
           : (
-            contacts.length > 0
+            contacts?.length > 0
               ? 'space-between'
               : 'center'
           )
 }
       >
-        {(!hasError && contacts.length > 0) && (
+        {(!hasError && contacts?.length > 0) && (
         <strong>
-          {filteredContacts.length}
-          {filteredContacts.length === 1 ? ' contato' : ' contatos'}
+          {filteredContacts?.length}
+          {filteredContacts?.length === 1 ? ' contato' : ' contatos'}
         </strong>
         )}
         <Link to="/new-contact">Novo contato</Link>
@@ -104,7 +104,7 @@ export const Home = () => {
 
       {!hasError && (
         <>
-          {(contacts.length < 1 && !isLoading) && (
+          {(contacts?.length < 1 && !isLoading) && (
           <EmptyListContainer>
             <img src="/assets/svg/empty-box.svg" alt="empty-box" />
             <p>
@@ -115,7 +115,7 @@ export const Home = () => {
           </EmptyListContainer>
           )}
 
-          {(contacts.length > 0 && filteredContacts.length < 1) && (
+          {(contacts?.length > 0 && filteredContacts?.length < 1) && (
             <SearchNotFoundContainer>
               <img src="/assets/svg/magnifier-question.svg" alt="magnifier-question" />
               <span>
@@ -124,7 +124,7 @@ export const Home = () => {
             </SearchNotFoundContainer>
           )}
 
-          {filteredContacts.length > 0 && (
+          {filteredContacts?.length > 0 && (
           <ListHeader orderBy={orderBy}>
             <button type="button" onClick={handleToggleOrderBy}>
               <span>Nome</span>
