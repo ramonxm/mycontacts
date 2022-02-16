@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormGroup } from '../FormGroup';
 import { Form, ButtonContainer } from './style';
 import { Input } from '../Input';
@@ -8,12 +8,15 @@ import { Button } from '../Button';
 import isEmailValid from '../../utils/isEmailValid';
 import formatPhone from '../../utils/formatPhone';
 import { useErrors } from '../../hooks/useErrors';
+import CategoriesService from '../../services/CategoriesService';
 
 export const ContactForm = ({ buttonLabel }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useState('');
+  const [categories, setCategories] = useState([]);
+
   const {
     errors,
     setError,
@@ -22,6 +25,16 @@ export const ContactForm = ({ buttonLabel }) => {
   } = useErrors();
 
   const isFormValid = (name && errors.length === 0);
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const categoriesList = await CategoriesService.listCategories();
+        setCategories(categoriesList);
+      } catch {}
+    }
+    loadCategories();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -79,12 +92,19 @@ export const ContactForm = ({ buttonLabel }) => {
       </FormGroup>
       <FormGroup>
         <Select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
         >
-          <option value="instagram">
-            Instagram
+          <option value="">
+            Sem categoria
           </option>
+          {
+            categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))
+          }
         </Select>
       </FormGroup>
       <ButtonContainer>
