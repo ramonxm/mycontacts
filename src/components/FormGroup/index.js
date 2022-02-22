@@ -1,9 +1,15 @@
 import PropTypes from 'prop-types';
+import { Spinner } from '../Spinner';
 import { Container } from './style';
 
-export const FormGroup = ({ children, error }) => (
+export const FormGroup = ({ children, error, isLoading }) => (
   <Container>
-    {children}
+    <div className="form-item">
+      {children}
+      {isLoading && (
+        <Spinner size={16} />
+      )}
+    </div>
     {!!error && <small>{error}</small>}
   </Container>
 );
@@ -11,8 +17,10 @@ export const FormGroup = ({ children, error }) => (
 FormGroup.propTypes = {
   children: PropTypes.node.isRequired,
   error: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 FormGroup.defaultProps = {
   error: null,
+  isLoading: false,
 };
