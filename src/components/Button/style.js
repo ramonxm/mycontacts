@@ -11,6 +11,9 @@ export const Button = styled.button`
   color: #fff;
   border-radius: 4px;
   transition: background 0.2s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: ${({ theme }) => theme.palette.primary.light};
