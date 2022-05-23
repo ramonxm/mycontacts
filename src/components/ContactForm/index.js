@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { FormGroup } from '../FormGroup';
-import { Form, ButtonContainer } from './style';
-import { Input } from '../Input';
-import { Select } from '../Select';
-import { Button } from '../Button';
-import isEmailValid from '../../utils/isEmailValid';
-import formatPhone from '../../utils/formatPhone';
+import { useEffect, useState } from 'react';
 import { useErrors } from '../../hooks/useErrors';
 import CategoriesService from '../../services/CategoriesService';
+import formatPhone from '../../utils/formatPhone';
+import isEmailValid from '../../utils/isEmailValid';
+import { Button } from '../Button';
+import { FormGroup } from '../FormGroup';
+import { Input } from '../Input';
+import { Select } from '../Select';
+import { ButtonContainer, Form } from './style';
 
-export const ContactForm = ({ buttonLabel }) => {
+export const ContactForm = ({ buttonLabel, onSubmit }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -19,29 +19,23 @@ export const ContactForm = ({ buttonLabel }) => {
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
   const {
-    errors,
-    setError,
-    removeError,
-    getErrorMessageByFieldName,
+    errors, setError, removeError, getErrorMessageByFieldName,
   } = useErrors();
 
-  const isFormValid = (name && errors.length === 0);
+  const isFormValid = name && errors.length === 0;
 
   useEffect(() => {
     async function loadCategories() {
       try {
         const categoriesList = await CategoriesService.listCategories();
         setCategories(categoriesList);
-      } catch {} finally {
+      } catch {
+      } finally {
         setIsLoadingCategories(false);
       }
     }
     loadCategories();
   }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -64,6 +58,17 @@ export const ContactForm = ({ buttonLabel }) => {
 
   const handlePhoneChange = (e) => {
     setPhone(formatPhone(e.target.value));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    onSubmit({
+      name,
+      email,
+      phone,
+      categoryId,
+    });
   };
 
   return (
@@ -99,16 +104,12 @@ export const ContactForm = ({ buttonLabel }) => {
           onChange={(e) => setCategoryId(e.target.value)}
           disabled={isLoadingCategories}
         >
-          <option value="">
-            Sem categoria
-          </option>
-          {
-            categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))
-          }
+          <option value="">Sem categoria</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </Select>
       </FormGroup>
       <ButtonContainer>
@@ -122,4 +123,5 @@ export const ContactForm = ({ buttonLabel }) => {
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
