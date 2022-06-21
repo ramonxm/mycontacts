@@ -122,7 +122,7 @@ export const ContactForm = ({ buttonLabel, onSubmit }) => {
         </Select>
       </FormGroup>
       <ButtonContainer>
-        <Button tye="submit" disabled={!isFormValid || isSubmitting}>
+        <Button type="submit" disabled={!isFormValid || isSubmitting}>
           {!isSubmitting && buttonLabel}
           {isSubmitting && <Spinner size={16} />}
         </Button>
