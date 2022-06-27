@@ -17,6 +17,7 @@ export const NewContact = () => {
       toast({
         type: 'success',
         text: 'Contato cadastrado com sucesso!',
+        duration: 3000,
       });
     } catch {
       toast({
