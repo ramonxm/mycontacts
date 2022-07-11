@@ -6,11 +6,7 @@ class ContactsService {
   }
 
   listContacts(orderBy = 'asc') {
-    return this.httpClient.get(`/contacts?orderBy=${orderBy}`, {
-      headers: {
-        Authorization: 'meutoken',
-      },
-    });
+    return this.httpClient.get(`/contacts?orderBy=${orderBy}`);
   }
 
   getContactById(id) {
@@ -19,6 +15,10 @@ class ContactsService {
 
   createContact(contact) {
     return this.httpClient.post('/contacts', { body: contact });
+  }
+
+  updateContact(id, contact) {
+    return this.httpClient.put(`/contacts/${id}`, { body: contact });
   }
 }
 
