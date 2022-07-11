@@ -5,7 +5,7 @@ import * as S from './style';
 export const PageHeader = ({ title }) => (
   <S.Container>
     <Link to="/">
-      <img src="assets/svg/arrow.svg" alt="back" />
+      <img src="/assets/svg/arrow.svg" alt="back" />
       <span>Voltar</span>
     </Link>
     <h1>
