@@ -14,6 +14,7 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   &:hover {
     background: ${({ theme }) => theme.palette.primary.light};
@@ -24,8 +25,8 @@ export const Button = styled.button`
   }
 
   &[disabled] {
-    background: #ccc;
-    cursor: default;
+    background: #ccc !important;
+    cursor: default !important;
   }
 
   ${({ theme, danger }) => danger && css`
