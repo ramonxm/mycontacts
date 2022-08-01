@@ -5,11 +5,13 @@ import { ContactForm } from '../../components/ContactForm';
 import ContactsService from '../../services/ContactsService';
 import { Loader } from '../../components/Loader';
 import toast from '../../utils/toast';
+import { useSafeAsyncAction } from '../../hooks/useSafeAsyncAction';
 
 export const EditContact = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [contactName, setContactName] = useState('');
   const contactFormRef = useRef(null);
+  const safeAsyncAction = useSafeAsyncAction();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -43,19 +45,24 @@ export const EditContact = () => {
     const loadContact = async () => {
       try {
         const contact = await ContactsService.getContactById(id);
-        contactFormRef.current.setFieldsValues(contact);
-        setIsLoading(false);
-        setContactName(contact.name);
-      } catch (error) {
-        navigate('/');
-        toast({
-          type: 'danger',
-          text: 'Contato não encontrado!',
+
+        safeAsyncAction(() => {
+          contactFormRef.current.setFieldsValues(contact);
+          setIsLoading(false);
+          setContactName(contact.name);
+        });
+      } catch {
+        safeAsyncAction(() => {
+          navigate('/');
+          toast({
+            type: 'danger',
+            text: 'Contato não encontrado!',
+          });
         });
       }
     };
     loadContact();
-  }, [id, navigate]);
+  }, [id, navigate, safeAsyncAction]);
 
   return (
     <>
