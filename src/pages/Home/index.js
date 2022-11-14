@@ -28,25 +28,24 @@ export const Home = () => {
     orderBy,
   } = useHome();
 
+  const hasContacts = !hasError && contacts?.length > 0;
+  const isListEmpty = !hasError && (!isLoading && !hasContacts);
+  const isSearchEmpty = !hasError || (hasContacts && filteredContacts?.length < 1);
+
   return (
     <Container>
       <Loader isLoading={isLoading} />
+      {hasContacts && <InputSearch value={searchTerm} onChange={handleChangeSearchTerm} />}
       <Header
         hasError={hasError}
         qtyOfContacts={contacts?.length}
         qtyOfFilteredContacts={filteredContacts?.length}
       />
-      {hasError && (
-        <ErrorStatus onTryAgain={handleTryAgain} />
-      )}
-      {!hasError && (
+      {hasError && <ErrorStatus onTryAgain={handleTryAgain} />}
+      {isListEmpty && <EmptyList />}
+      {isSearchEmpty && <SearchNotFound />}
+      {hasContacts && (
         <>
-          {contacts?.length < 1 && !isLoading && (
-            <EmptyList />
-          )}
-          {contacts?.length > 0 && filteredContacts?.length < 1 && (
-          <SearchNotFound />
-          )}
           <ContactList
             orderBy={orderBy}
             filteredContacts={filteredContacts}
@@ -64,13 +63,8 @@ export const Home = () => {
             <p>
               Essa ação não poderá ser desfeita!
             </p>
-
           </Modal>
         </>
-
-      )}
-      {contacts?.length > 0 && (
-        <InputSearch value={searchTerm} onChange={handleChangeSearchTerm} />
       )}
     </Container>
   );
