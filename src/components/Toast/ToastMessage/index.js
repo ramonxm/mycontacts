@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
+import { useAnimatedUnmount } from '../../../hooks/useAnimatedUnmount';
 import { Container } from './style';
 
-export const ToastMessage = ({
-  message, onRemoveMessage,
-}) => {
+export const ToastMessage = ({ message, onRemoveMessage, isLeaving }) => {
+  const { animatedElementRef, shouldRender } = useAnimatedUnmount(!isLeaving);
   const handleRemoveToast = () => {
     onRemoveMessage(message.id);
   };
@@ -17,13 +17,27 @@ export const ToastMessage = ({
 
     return () => clearTimeout(timeoutId);
   }, [message, onRemoveMessage]);
+
+  if (!shouldRender) {
+    return null;
+  }
+
   return (
-    <Container type={message.type} onClick={handleRemoveToast} tabIndex={0} role="button">
-      {message.type === 'danger' && <img src="/assets/svg/x-circle.svg" alt="danger icon" />}
-      {message.type === 'success' && <img src="/assets/svg/check-circle.svg" alt="success icon" />}
-      <strong>
-        {message.text}
-      </strong>
+    <Container
+      type={message.type}
+      isLeaving={isLeaving}
+      onClick={handleRemoveToast}
+      tabIndex={0}
+      role="button"
+      ref={animatedElementRef}
+    >
+      {message.type === 'danger' && (
+        <img src="/assets/svg/x-circle.svg" alt="danger icon" />
+      )}
+      {message.type === 'success' && (
+        <img src="/assets/svg/check-circle.svg" alt="success icon" />
+      )}
+      <strong>{message.text}</strong>
     </Container>
   );
 };
@@ -36,4 +50,5 @@ ToastMessage.propTypes = {
     duration: PropTypes.number,
   }).isRequired,
   onRemoveMessage: PropTypes.func.isRequired,
+  isLeaving: PropTypes.bool.isRequired,
 };
