@@ -30,7 +30,7 @@ export const Home = () => {
 
   const hasContacts = !hasError && contacts?.length > 0;
   const isListEmpty = !hasError && (!isLoading && !hasContacts);
-  const isSearchEmpty = !hasError || (hasContacts && filteredContacts?.length < 1);
+  const isSearchEmpty = !hasError && (hasContacts && filteredContacts?.length < 1);
 
   return (
     <Container>
@@ -43,7 +43,7 @@ export const Home = () => {
       />
       {hasError && <ErrorStatus onTryAgain={handleTryAgain} />}
       {isListEmpty && <EmptyList />}
-      {isSearchEmpty && <SearchNotFound />}
+      {isSearchEmpty && <SearchNotFound searchTerm={searchTerm} />}
       {hasContacts && (
         <>
           <ContactList
