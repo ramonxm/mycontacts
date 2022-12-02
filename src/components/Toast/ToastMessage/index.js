@@ -1,13 +1,30 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { useAnimatedUnmount } from '../../../hooks/useAnimatedUnmount';
+import { useEffect, useRef } from 'react';
 import { Container } from './style';
 
-export const ToastMessage = ({ message, onRemoveMessage, isLeaving }) => {
-  const { animatedElementRef, shouldRender } = useAnimatedUnmount(!isLeaving);
+export const ToastMessage = ({
+  message, onRemoveMessage, onAnimationEnd, isLeaving,
+}) => {
+  const animatedElementRef = useRef(null);
   const handleRemoveToast = () => {
     onRemoveMessage(message.id);
   };
+
+  useEffect(() => {
+    const element = animatedElementRef.current;
+
+    function handleAnimationEnd() {
+      onAnimationEnd(message.id);
+    }
+
+    if (!isLeaving) {
+      element.addEventListener('animationend', handleAnimationEnd);
+    }
+
+    return () => {
+      element.removeEventListener('animationend', handleAnimationEnd);
+    };
+  }, [isLeaving, message.id, onAnimationEnd]);
 
   useEffect(() => {
     const timeoutId = setTimeout(
@@ -17,10 +34,6 @@ export const ToastMessage = ({ message, onRemoveMessage, isLeaving }) => {
 
     return () => clearTimeout(timeoutId);
   }, [message, onRemoveMessage]);
-
-  if (!shouldRender) {
-    return null;
-  }
 
   return (
     <Container
@@ -51,4 +64,5 @@ ToastMessage.propTypes = {
   }).isRequired,
   onRemoveMessage: PropTypes.func.isRequired,
   isLeaving: PropTypes.bool.isRequired,
+  onAnimationEnd: PropTypes.func.isRequired,
 };
