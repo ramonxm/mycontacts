@@ -1,30 +1,29 @@
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Container } from './style';
 
 export const ToastMessage = ({
-  message, onRemoveMessage, onAnimationEnd, isLeaving,
+  message, onRemoveMessage, isLeaving, animatedRef,
 }) => {
-  const animatedElementRef = useRef(null);
   const handleRemoveToast = () => {
     onRemoveMessage(message.id);
   };
 
-  useEffect(() => {
-    const element = animatedElementRef.current;
+  // useEffect(() => {
+  //   const element = animatedElementRef.current;
 
-    function handleAnimationEnd() {
-      onAnimationEnd(message.id);
-    }
+  //   function handleAnimationEnd() {
+  //     onAnimationEnd(message.id);
+  //   }
 
-    if (!isLeaving) {
-      element.addEventListener('animationend', handleAnimationEnd);
-    }
+  //   if (!isLeaving) {
+  //     element.addEventListener('animationend', handleAnimationEnd);
+  //   }
 
-    return () => {
-      element.removeEventListener('animationend', handleAnimationEnd);
-    };
-  }, [isLeaving, message.id, onAnimationEnd]);
+  //   return () => {
+  //     element.removeEventListener('animationend', handleAnimationEnd);
+  //   };
+  // }, [isLeaving, message.id, onAnimationEnd]);
 
   useEffect(() => {
     const timeoutId = setTimeout(
@@ -42,7 +41,7 @@ export const ToastMessage = ({
       onClick={handleRemoveToast}
       tabIndex={0}
       role="button"
-      ref={animatedElementRef}
+      ref={animatedRef}
     >
       {message.type === 'danger' && (
         <img src="/assets/svg/x-circle.svg" alt="danger icon" />
@@ -64,5 +63,5 @@ ToastMessage.propTypes = {
   }).isRequired,
   onRemoveMessage: PropTypes.func.isRequired,
   isLeaving: PropTypes.bool.isRequired,
-  onAnimationEnd: PropTypes.func.isRequired,
+  animatedRef: PropTypes.shape().isRequired,
 };
