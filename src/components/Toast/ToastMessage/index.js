@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { Container } from './style';
 
-export const ToastMessage = ({
+const ToastMessage = memo(({
   message, onRemoveMessage, isLeaving, animatedRef,
 }) => {
   const handleRemoveToast = () => {
@@ -36,7 +36,7 @@ export const ToastMessage = ({
       <strong>{message.text}</strong>
     </Container>
   );
-};
+});
 
 ToastMessage.propTypes = {
   message: PropTypes.shape({
