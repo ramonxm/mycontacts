@@ -9,22 +9,6 @@ export const ToastMessage = ({
     onRemoveMessage(message.id);
   };
 
-  // useEffect(() => {
-  //   const element = animatedElementRef.current;
-
-  //   function handleAnimationEnd() {
-  //     onAnimationEnd(message.id);
-  //   }
-
-  //   if (!isLeaving) {
-  //     element.addEventListener('animationend', handleAnimationEnd);
-  //   }
-
-  //   return () => {
-  //     element.removeEventListener('animationend', handleAnimationEnd);
-  //   };
-  // }, [isLeaving, message.id, onAnimationEnd]);
-
   useEffect(() => {
     const timeoutId = setTimeout(
       () => onRemoveMessage(message.id),
