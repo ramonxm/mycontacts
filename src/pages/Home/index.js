@@ -9,7 +9,7 @@ import { SearchNotFound } from './components/SearchNotFound';
 import { Container } from './style';
 import { useHome } from './useHome';
 
-export const Home = () => {
+export function Home() {
   const {
     handleChangeSearchTerm,
     handleCloseDeleteModal,
@@ -68,4 +68,4 @@ export const Home = () => {
       )}
     </Container>
   );
-};
+}

@@ -4,7 +4,7 @@ import { ToastMessage } from '../ToastMessage';
 import { toastManager } from '../../../utils/toast';
 import { useAnimatedList } from '../../../hooks/useAnimatedList';
 
-export const ToastContainer = () => {
+export function ToastContainer() {
   const {
     setItems,
     renderList,
@@ -37,4 +37,4 @@ export const ToastContainer = () => {
       ))}
     </Container>
   );
-};
+}

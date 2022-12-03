@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, memo } from 'react';
 import { Container } from './style';
 
-const ToastMessage = memo(({
+export const ToastMessage = memo(({
   message, onRemoveMessage, isLeaving, animatedRef,
 }) => {
   const handleRemoveToast = () => {

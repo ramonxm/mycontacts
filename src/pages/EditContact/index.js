@@ -3,7 +3,7 @@ import { ContactForm } from '../../components/ContactForm';
 import { Loader } from '../../components/Loader';
 import { useEditContact } from './useEditContact';
 
-export const EditContact = () => {
+export function EditContact() {
   const {
     isLoading,
     contactName,
@@ -22,4 +22,4 @@ export const EditContact = () => {
       />
     </>
   );
-};
+}

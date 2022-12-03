@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Container } from './style';
 
-export const Header = ({ hasError, qtyOfContacts, qtyOfFilteredContacts }) => {
+export function Header({ hasError, qtyOfContacts, qtyOfFilteredContacts }) {
   const alignment = hasError
     ? 'flex-end'
     : qtyOfContacts > 0
@@ -24,7 +24,7 @@ export const Header = ({ hasError, qtyOfContacts, qtyOfFilteredContacts }) => {
       <Link to="/new-contact">Novo contato</Link>
     </Container>
   );
-};
+}
 
 Header.propTypes = {
   hasError: PropTypes.bool.isRequired,

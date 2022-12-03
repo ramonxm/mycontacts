@@ -2,17 +2,19 @@ import PropTypes from 'prop-types';
 import { Spinner } from '../Spinner';
 import { Container } from './style';
 
-export const FormGroup = ({ children, error, isLoading }) => (
-  <Container>
-    <div className="form-item">
-      {children}
-      {isLoading && (
+export function FormGroup({ children, error, isLoading }) {
+  return (
+    <Container>
+      <div className="form-item">
+        {children}
+        {isLoading && (
         <Spinner size={16} />
-      )}
-    </div>
-    {!!error && <small>{error}</small>}
-  </Container>
-);
+        )}
+      </div>
+      {!!error && <small>{error}</small>}
+    </Container>
+  );
+}
 
 FormGroup.propTypes = {
   children: PropTypes.node.isRequired,

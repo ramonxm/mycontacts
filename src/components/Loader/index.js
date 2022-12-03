@@ -4,7 +4,7 @@ import { Spinner } from '../Spinner';
 import { ReactPortal } from '../ReactPortal';
 import { useAnimatedUnmount } from '../../hooks/useAnimatedUnmount';
 
-export const Loader = ({ isLoading }) => {
+export function Loader({ isLoading }) {
   const { animatedElementRef, shouldRender } = useAnimatedUnmount(isLoading);
 
   if (!shouldRender) {
@@ -18,7 +18,7 @@ export const Loader = ({ isLoading }) => {
       </Overlay>
     </ReactPortal>
   );
-};
+}
 
 Loader.propTypes = {
   isLoading: PropTypes.bool.isRequired,

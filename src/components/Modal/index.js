@@ -4,7 +4,7 @@ import { Button } from '../Button';
 import { ReactPortal } from '../ReactPortal';
 import { useAnimatedUnmount } from '../../hooks/useAnimatedUnmount';
 
-export const Modal = ({
+export function Modal({
   danger,
   title,
   children,
@@ -14,7 +14,7 @@ export const Modal = ({
   onConfirm,
   visible,
   isLoading,
-}) => {
+}) {
   const { animatedElementRef, shouldRender } = useAnimatedUnmount(visible);
 
   if (!shouldRender) {
@@ -49,7 +49,7 @@ export const Modal = ({
       </Overlay>
     </ReactPortal>
   );
-};
+}
 
 Modal.propTypes = {
   danger: PropTypes.bool,

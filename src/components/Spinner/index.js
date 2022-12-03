@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import { StyledSpinner } from './style';
 
-const Spinner = ({ size }) => <StyledSpinner size={size} />;
+function Spinner({ size }) {
+  return <StyledSpinner size={size} />;
+}
 
 Spinner.propTypes = {
   size: PropTypes.number,
