@@ -52,7 +52,7 @@ export const useEditContact = () => {
       } catch (error) {
         if (!(error instanceof DOMException && error.name === 'AbortError')) {
           safeAsyncAction(() => {
-            navigate('/');
+            navigate('/', { replace: true });
             toast({
               type: 'danger',
               text: 'Contato não encontrado!',
